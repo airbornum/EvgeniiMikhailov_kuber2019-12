@@ -8,9 +8,22 @@ spec:
   containers:
   - name: web
     image: evgeniim/web
+    volumeMounts:
+    - mountPath: /app
+      name: app
     resources:
       limits:
         memory: "100Mi"
         cpu: "500m"
     ports:
       - containerPort: 8000
+  initContainers:
+  - name: init-pull-page
+    image: busybox:1.31
+    volumeMounts:
+    - mountPath: /app
+      name: app
+    command: ["sh", "-c", "wget -O- https://tinyurl.com/otus-k8s-intro | sh"]
+  volumes:
+    - name: app
+      emptyDir: {}
