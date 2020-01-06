@@ -3,9 +3,13 @@ EvgeniiMikhailov Platform repository
 
 ## ДЗ #1 (к лекции #2)
 ### Разберитесь почему все pod в namespace kube-system восстановились после удаления.
-core-dns запускается в deployment, поэтому при удаление подов replicaset восставливает поды.
-kube-proxy управляется и создается Daemonset.
-kube-apiserver, etcd, kube-controller-manager, kube-scheduler являются статическими подами, их запускает kubelet ноды, так как их описание находится в папке /etc/kubernetes/manifests/
+**core-dns** запускается в deployment, поэтому при удаление подов replicaset восставливает поды.
+
+**kube-proxy** управляется и создается Daemonset.
+
+**kube-apiserver**, **etcd**, **kube-controller-manager**, **kube-scheduler** являются статическими подами, их запускает 
+
+**kubelet** ноды, так как их описание находится в папке /etc/kubernetes/manifests/
 В параметрах запуска kubelet (в файле /etc/systemd/system/kubelet.service.d/10-kubeadm.conf) указан путь к директории из которой создавать статические поды --pod-manifest-path /etc/kubernetes/manifests
 kube-addon-manager и storage-provisioner поды являются аддонами minikube. Они управляются с помощью команды minikube addons
 
