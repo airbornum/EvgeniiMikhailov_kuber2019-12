@@ -7,11 +7,10 @@ EvgeniiMikhailov Platform repository
 
 **kube-proxy** управляется и создается Daemonset.
 
-**kube-apiserver**, **etcd**, **kube-controller-manager**, **kube-scheduler** являются статическими подами, их запускает 
-
-**kubelet** ноды, так как их описание находится в папке /etc/kubernetes/manifests/
+**kube-apiserver**, **etcd**, **kube-controller-manager**, **kube-scheduler** являются статическими подами, их запускает kubelet ноды, так как их описание находится в папке /etc/kubernetes/manifests/
 В параметрах запуска kubelet (в файле /etc/systemd/system/kubelet.service.d/10-kubeadm.conf) указан путь к директории из которой создавать статические поды --pod-manifest-path /etc/kubernetes/manifests
-kube-addon-manager и storage-provisioner поды являются аддонами minikube. Они управляются с помощью команды minikube addons
+
+**kube-addon-manager** и **storage-provisioner** являются аддонами minikube. Они управляются с помощью команды minikube addons
 
 ### Создать pod
 Создан Docker image на основе стандартного image nginx. Pod использует volume emptyDir который монтируется в /app. Nginx отдает содержимое этой директории. Файл index.html скачивается с помощью initContainer.
