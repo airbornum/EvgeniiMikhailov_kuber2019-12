@@ -25,3 +25,8 @@ kubectl port-forward --address 0.0.0.0 pod/web 8000:8000
 kubectl run frontend --image evgeniim/hipster-frontend --restart=Never --dry-run -o yaml > frontend-pod.yaml
 ```
 Под не запускался из-за отсутсвия переменных окружений.
+
+## ДЗ #2 (к лекуии #3)
+### ReplicaSet
+
+Создано описание rs для hipster-frontend.
