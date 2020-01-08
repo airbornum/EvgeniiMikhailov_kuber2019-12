@@ -82,3 +82,7 @@ paymentservice-7669454bd5   3         2         2       7s
 paymentservice-7669454bd5   3         3         2       7s
 paymentservice-7669454bd5   3         3         3       10s
 ```
+
+### Probes
+
+Создан deployment для hipster-frontend с readiness probe.
