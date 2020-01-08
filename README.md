@@ -30,3 +30,7 @@ kubectl run frontend --image evgeniim/hipster-frontend --restart=Never --dry-run
 ### ReplicaSet
 
 Создано описание rs для hipster-frontend. Replicaset не умеет обновлять поды если изменился шаблон (template). Шаблон применяется для новых контейнеров.
+
+### Deployment
+
+Создан deployment дл hipster-paymentservice. Протестировано обновление образа.
