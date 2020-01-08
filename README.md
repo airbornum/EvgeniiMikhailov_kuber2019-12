@@ -86,3 +86,7 @@ paymentservice-7669454bd5   3         3         3       10s
 ### Probes
 
 Создан deployment для hipster-frontend с readiness probe.
+
+### DaemonSet
+
+Создан daemonset с node-exporter, который запускается на всех нодах кластера
