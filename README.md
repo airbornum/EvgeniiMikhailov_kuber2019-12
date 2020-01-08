@@ -34,3 +34,51 @@ kubectl run frontend --image evgeniim/hipster-frontend --restart=Never --dry-run
 ### Deployment
 
 Создан deployment дл hipster-paymentservice. Протестировано обновление образа.
+
+#### Задание со звездочкой
+Статус rs после изменения deployment (для blue-green). 
+```
+NAME                        DESIRED   CURRENT   READY   AGE
+paymentservice-74fb5b848d   3         3         3       10s
+paymentservice-7669454bd5   3         0         0       1s
+paymentservice-7669454bd5   3         0         0       1s
+paymentservice-7669454bd5   3         3         0       1s
+paymentservice-7669454bd5   3         3         1       3s
+paymentservice-7669454bd5   3         3         2       4s
+paymentservice-74fb5b848d   2         3         3       14s
+paymentservice-7669454bd5   3         3         3       6s
+paymentservice-74fb5b848d   2         3         3       17s
+paymentservice-74fb5b848d   2         2         2       18s
+paymentservice-74fb5b848d   0         2         2       18s
+paymentservice-74fb5b848d   0         2         2       20s
+paymentservice-74fb5b848d   0         0         0       20s
+```
+
+Статус rs после измениния deployment (для rolling update).
+```
+NAME                        DESIRED   CURRENT   READY   AGE
+paymentservice-74fb5b848d   3         3         3       17s
+paymentservice-7669454bd5   0         0         0       0s
+paymentservice-7669454bd5   0         0         0       0s
+paymentservice-74fb5b848d   2         3         3       17s
+paymentservice-74fb5b848d   2         3         3       17s
+paymentservice-7669454bd5   1         0         0       0s
+paymentservice-74fb5b848d   2         2         2       17s
+paymentservice-7669454bd5   1         0         0       0s
+paymentservice-7669454bd5   1         1         0       0s
+paymentservice-7669454bd5   1         1         1       3s
+paymentservice-74fb5b848d   1         2         2       20s
+paymentservice-7669454bd5   2         1         1       3s
+paymentservice-74fb5b848d   1         2         2       20s
+paymentservice-74fb5b848d   1         1         1       21s
+paymentservice-7669454bd5   2         1         1       4s
+paymentservice-7669454bd5   2         2         1       4s
+paymentservice-7669454bd5   2         2         2       6s
+paymentservice-74fb5b848d   0         1         1       23s
+paymentservice-7669454bd5   3         2         2       6s
+paymentservice-74fb5b848d   0         1         1       23s
+paymentservice-74fb5b848d   0         0         0       24s
+paymentservice-7669454bd5   3         2         2       7s
+paymentservice-7669454bd5   3         3         2       7s
+paymentservice-7669454bd5   3         3         3       10s
+```
