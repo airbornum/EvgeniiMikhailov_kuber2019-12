@@ -104,3 +104,7 @@ kubectl get pods -n kube-system --as system:serviceaccount:default:bob
 kubectl get pods -n kube-system --as system:serviceaccount:default:dave
 ```
 При этом команда, запущенная от bob, выполнится усспешно, а от имени dave с ошибкой Forbidden.
+
+### task02
+
+Создан отдельный namespace prometheus и роль с возможностью выполнять get,list,wathc в отношении pods всего кластера. Роль применена ко всем аккаунтам namespace prometheus.
