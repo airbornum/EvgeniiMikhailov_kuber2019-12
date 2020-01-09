@@ -90,3 +90,10 @@ paymentservice-7669454bd5   3         3         3       10s
 ### DaemonSet
 
 Создан daemonset с node-exporter, который запускается на всех нодах кластера
+
+## ДЗ #3 (к лекции #4)
+Знакомство с RBAC
+
+### task01
+
+Созданы 2 serviceaccount bob и dave.  Bob дана ClusterRole admin.
