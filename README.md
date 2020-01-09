@@ -97,3 +97,10 @@ paymentservice-7669454bd5   3         3         3       10s
 ### task01
 
 Созданы 2 serviceaccount bob и dave.  Bob дана ClusterRole admin.
+
+Проверить корректность настройки можно с помощью команд
+```bash
+kubectl get pods -n kube-system --as system:serviceaccount:default:bob
+kubectl get pods -n kube-system --as system:serviceaccount:default:dave
+```
+При этом команда, запущенная от bob, выполнится усспешно, а от имени dave с ошибкой Forbidden.
