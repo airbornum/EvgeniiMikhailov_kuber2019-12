@@ -26,7 +26,7 @@ kubectl run frontend --image evgeniim/hipster-frontend --restart=Never --dry-run
 ```
 Под не запускался из-за отсутсвия переменных окружений.
 
-## ДЗ #2 (к лекуии #3)
+## ДЗ #2 (к лекции #3)
 ### ReplicaSet
 
 Создано описание rs для hipster-frontend. Replicaset не умеет обновлять поды если изменился шаблон (template). Шаблон применяется для новых контейнеров.
