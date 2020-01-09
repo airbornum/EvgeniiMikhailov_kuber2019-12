@@ -26,7 +26,7 @@ kubectl run frontend --image evgeniim/hipster-frontend --restart=Never --dry-run
 ```
 Под не запускался из-за отсутсвия переменных окружений.
 
-## ДЗ #2 (к лекуии #3)
+## ДЗ #2 (к лекции #3)
 ### ReplicaSet
 
 Создано описание rs для hipster-frontend. Replicaset не умеет обновлять поды если изменился шаблон (template). Шаблон применяется для новых контейнеров.
@@ -90,3 +90,25 @@ paymentservice-7669454bd5   3         3         3       10s
 ### DaemonSet
 
 Создан daemonset с node-exporter, который запускается на всех нодах кластера
+
+## ДЗ #3 (к лекции #4)
+Знакомство с RBAC
+
+### task01
+
+Созданы 2 serviceaccount bob и dave.  Bob дана ClusterRole admin.
+
+Проверить корректность настройки можно с помощью команд
+```bash
+kubectl get pods -n kube-system --as system:serviceaccount:default:bob
+kubectl get pods -n kube-system --as system:serviceaccount:default:dave
+```
+При этом команда, запущенная от bob, выполнится усспешно, а от имени dave с ошибкой Forbidden.
+
+### task02
+
+Создан отдельный namespace prometheus и роль с возможностью выполнять get,list,wathc в отношении pods всего кластера. Роль применена ко всем аккаунтам namespace prometheus.
+
+### task03
+
+Создан отдельный namespace dev с двумя serviceaccounts (jane и ken). Jane назначена ClusterRole admin с помощью RoleBinding. Ken назначена ClusterRole view с помощью RoleBinding.
