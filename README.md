@@ -112,3 +112,7 @@ kubectl get pods -n kube-system --as system:serviceaccount:default:dave
 ### task03
 
 Создан отдельный namespace dev с двумя serviceaccounts (jane и ken). Jane назначена ClusterRole admin с помощью RoleBinding. Ken назначена ClusterRole view с помощью RoleBinding.
+
+## ДЗ #4 (к лекции #5)
+
+### Deployment
