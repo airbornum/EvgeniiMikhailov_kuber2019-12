@@ -150,4 +150,7 @@ kubectl get pods -n kube-system --as system:serviceaccount:default:dave
 kubectl apply -f kubernetes-networks/coredns/
 nslookup web-svc-lb.default.svc.cluster.local 172.17.255.10
 ```
-ß
+
+### Ingress
+
+Опубликован сервис через ingress
