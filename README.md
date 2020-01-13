@@ -141,3 +141,13 @@ kubectl get pods -n kube-system --as system:serviceaccount:default:dave
 ### Metallb
 
 Сервис web доступен через metallb.
+
+#### Задание со звездочкой
+
+Создан metallb serice для dns.
+Проверка
+```
+kubectl apply -f kubernetes-networks/coredns/
+nslookup web-svc-lb.default.svc.cluster.local 172.17.255.10
+```
+ß
