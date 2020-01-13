@@ -133,3 +133,6 @@ kubectl get pods -n kube-system --as system:serviceaccount:default:dave
 
 Похоже на стратегию Recreate. Вначале старые поды удаляются, после удаления создаются новые поды.
 В отличие от Recreate, который дожидается полного удаления старых подов, при данных значениях maxUnavailable  и maxSurge новые поды начинаю создаваться сразу после изменения статуса старых подов на terminating.
+
+### Service
+Создан сервис ClusterIP
