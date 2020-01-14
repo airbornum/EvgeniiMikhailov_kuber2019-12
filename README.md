@@ -164,3 +164,11 @@ nslookup web-svc-lb.default.svc.cluster.local 172.17.255.10
 Создано 2 deployment с nginx вместе с serice и configmap с конфигурацией nginx чтобы отличать различные версии deployment по возвращаемым nginx данным. Все манифесты применяются в отдельный namespace canary.
 
 В качестве теста реализовал перенапрелвение 50% травфика на новые поды. В процессе реализации столкнулся с проблемой, что трафик не балансировался. Логи ingress controller подсказали, что проблема в отсутсвие имени хоста в настройках ingress (cannot merge alternative backend canary-deployment-2-80 into hostname  that does not exist). Добавление опции host решило проблему.
+
+Реализовано перенаправление трафика на canary с помощью заголовка http. Способ проверки
+```bash
+curl -H "canary:always" -H "host: deployment.cluster.local" 172.17.255.2/canary
+Second deployment-2-9f4d8446-g6kh8
+curl -H "host: deployment.cluster.local" 172.17.255.2/canary 
+First deployment-1-5cf8c54df-lxtwh
+```
