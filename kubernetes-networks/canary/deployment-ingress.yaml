@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: deployment
+  namespace: canary
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: deployment.cluster.local
+    http:
+      paths:
+      - path: /canary
+        backend:
+          serviceName: deployment-1
+          servicePort: 80
