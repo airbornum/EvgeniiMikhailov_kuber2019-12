@@ -1,0 +1,67 @@
+---
+apiVersion: v1
+data:
+  default.conf: |
+    server {
+        listen       80;
+        server_name  _;
+
+        location / {
+            return 200 "Second $hostname\n";
+        }
+    }
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: nginx-2
+  namespace: canary
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: deployment-2
+  name: deployment-2
+  namespace: canary
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      run: deployment-2
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: deployment-2
+    spec:
+      containers:
+      - image: nginx:1.13
+        name: deployment-2
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /etc/nginx/conf.d
+          readOnly: true
+          name: nginx-conf
+      volumes:
+      - name: nginx-conf
+        configMap:
+          name: nginx-2
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: deployment-2
+  namespace: canary
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  selector:
+    run: deployment-2
