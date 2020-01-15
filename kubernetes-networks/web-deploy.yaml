@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: web
+  name: web
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: web
+        image: evgeniim/web:v1.0.0
+        readinessProbe:
+          httpGet:
+            path: /index.html
+            port: 8000
+        livenessProbe:
+          tcpSocket: {port: 8000}
+        volumeMounts:
+        - mountPath: /app
+          name: app
+        ports:
+        - containerPort: 8000
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "100m"
+      initContainers:
+      - name: init-pull-page
+        image: busybox:1.31
+        volumeMounts:
+        - mountPath: /app
+          name: app
+        command: ["sh", "-c", "wget -O- https://tinyurl.com/otus-k8s-intro | sh"]
+      volumes:
+        - name: app
+          emptyDir: {}

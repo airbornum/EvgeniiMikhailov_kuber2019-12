@@ -112,3 +112,63 @@ kubectl get pods -n kube-system --as system:serviceaccount:default:dave
 ### task03
 
 Создан отдельный namespace dev с двумя serviceaccounts (jane и ken). Jane назначена ClusterRole admin с помощью RoleBinding. Ken назначена ClusterRole view с помощью RoleBinding.
+
+## ДЗ #4 (к лекции #5)
+
+### Deployment
+#### Тестирование разных вариантов maxSurge и maxUnavailable. 
+##### maxUnavailable = **0**; maxSurge = **100%**
+
+Вначале создаются новые поды. По готовности нового пода удаляется старый под.
+
+##### maxUnavailable = **0**; maxSurge = **0**
+
+Не валидная спецификация. Оба этих поля не могут равняться нулю однвоременно.
+
+##### maxUnavailable = **100%**; maxSurge = **100%**
+
+Одновременно создаются новые поды и удаляются старые. Данная стратегия может привести к простою сервиса.
+
+#####  maxUnavailable = **100%**; maxSurge = **0**
+
+Похоже на стратегию Recreate. Вначале старые поды удаляются, после удаления создаются новые поды.
+В отличие от Recreate, который дожидается полного удаления старых подов, при данных значениях maxUnavailable  и maxSurge новые поды начинаю создаваться сразу после изменения статуса старых подов на terminating.
+
+### Service
+
+Создан сервис ClusterIP
+
+### Metallb
+
+Сервис web доступен через metallb.
+
+#### Задание со звездочкой
+
+Создан metallb serice для dns.
+Проверка
+```
+kubectl apply -f kubernetes-networks/coredns/
+nslookup web-svc-lb.default.svc.cluster.local 172.17.255.10
+```
+
+### Ingress
+
+Опубликован сервис через ingress
+
+#### Задание со звездочкой (dashboard)
+
+Манифест Ingress находится в папке dashboard. Сам dashboard находится не в работоспособном состоянии, при попытке его открыть вижу пустую страницу. Точно такой же результат можно наблюдать если подключиться к его сервису напрямую.
+
+#### Задание со звездочкой (canary)
+
+Создано 2 deployment с nginx вместе с serice и configmap с конфигурацией nginx чтобы отличать различные версии deployment по возвращаемым nginx данным. Все манифесты применяются в отдельный namespace canary.
+
+В качестве теста реализовал перенапрелвение 50% травфика на новые поды. В процессе реализации столкнулся с проблемой, что трафик не балансировался. Логи ingress controller подсказали, что проблема в отсутсвие имени хоста в настройках ingress (cannot merge alternative backend canary-deployment-2-80 into hostname  that does not exist). Добавление опции host решило проблему.
+
+Реализовано перенаправление трафика на canary с помощью заголовка http. Способ проверки
+```bash
+curl -H "canary:always" -H "host: deployment.cluster.local" 172.17.255.2/canary
+Second deployment-2-9f4d8446-g6kh8
+curl -H "host: deployment.cluster.local" 172.17.255.2/canary 
+First deployment-1-5cf8c54df-lxtwh
+```
