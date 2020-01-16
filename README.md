@@ -172,3 +172,7 @@ Second deployment-2-9f4d8446-g6kh8
 curl -H "host: deployment.cluster.local" 172.17.255.2/canary 
 First deployment-1-5cf8c54df-lxtwh
 ```
+
+## ДЗ #5 (к лекции #6)
+
+Развернут statefulset с minio (локальное S3 хранилище). В манифесте statefulset было необходимо изменить версию API на apps/v1.
