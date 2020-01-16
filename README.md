@@ -176,3 +176,12 @@ First deployment-1-5cf8c54df-lxtwh
 ## ДЗ #5 (к лекции #6)
 
 Развернут statefulset с minio (локальное S3 хранилище). В манифесте statefulset было необходимо изменить версию API на apps/v1.
+
+### Задание со *
+
+Создан манифест с секретами, изменено описание StatefulSet для использования secrets. 
+Для тестирования внечале необходимо применить манифест secrets.yaml, затем minio-statefulset-secrets.yaml
+```bash
+kubectl apply -f kubernetes-volumes/with-secrets/secrets.yaml
+kubectl apply -f kubernetes-volumes/with-secrets/minio-statefulset-secrets.yaml
+```
