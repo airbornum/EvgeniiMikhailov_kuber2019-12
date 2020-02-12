@@ -195,7 +195,6 @@ gcloud beta container --project "test-lab" clusters create "templating-lab" --zo
 
 ### Установка nginx-ingress, cert-manager, chartmuseum, harbor
 
-#### Chartmuseum
 Получить файл values.yaml со стандартными значениями можно с помощью команды
 ```bash
 helm inspect values stable/chartmuseum --version=2.3.2 > chartmuseum/values.yaml
