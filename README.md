@@ -199,3 +199,6 @@ gcloud beta container --project "test-lab" clusters create "templating-lab" --zo
 ```bash
 helm inspect values stable/chartmuseum --version=2.3.2 > chartmuseum/values.yaml
 ```
+
+### Создание helm chart
+Создан чарт для frontend и общий для остальных сервисов.
