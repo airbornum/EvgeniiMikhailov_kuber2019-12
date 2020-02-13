@@ -1,0 +1,32 @@
+notary:
+  enabled: false
+expose:
+    type: ingress
+    tls:
+      enabled: true
+      secretName: harbor.35.205.127.156.nip.io
+    ingress:
+      hosts:
+        core: harbor.35.205.127.156.nip.io
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        kubernetes.io/tls-acme: "true"
+        certmanager.k8s.io/cluster-issuer: "letsencrypt-production"
+        certmanager.k8s.io/acme-challenge-type: http01
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/proxy-body-size: "0"
+externalURL: https://harbor.35.205.127.156.nip.io
+persistence:
+  resourcePolicy: ""
+  enabled: true
+  persistentVolumeClaim:
+    registry:
+      storageClass: "standard"
+    chartmuseum:
+      storageClass: "standard"
+    jobservice:
+      storageClass: "standard"
+    database:
+      storageClass: "standard"
+    redis:
+      storageClass: "standard"
