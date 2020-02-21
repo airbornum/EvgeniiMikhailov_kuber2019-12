@@ -203,6 +203,8 @@ helm inspect values stable/chartmuseum --version=2.3.2 > chartmuseum/values.yaml
 ### Создание helm chart
 Создан чарт для frontend и общий для остальных сервисов.
 
-## ДЗ #7 (к лекции #7)
+## ДЗ #7 (к лекции #9)
 
 Выполнено задание по созданию CRD и CR. Протестировано описание спецификации и обязательных полей.
+
+## [ДЗ #9 (к лекции #11)](kubernetes-logging/README.md)
