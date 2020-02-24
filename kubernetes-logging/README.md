@@ -36,5 +36,42 @@ helm upgrade --install elasticsearch elastic/elasticsearch --namespace observabi
 ```bash
 kubectl get pods -n observability -o wide -l chart=elasticsearch
 ```
-*В ДЗ эта команда дана с ошибкой, неправильно указан namespace.*
+*В ДЗ (страница 12) эта команда дана с ошибкой, неправильно указан namespace.*
 
+## Установка nginx-ingress
+```bash
+kubectl create ns nginx-ingress
+helm upgrade --install nginx-ingress stable/nginx-ingress --wait --namespace=nginx-ingress -f kubernetes-logging/nginx-ingress.values.yaml
+```
+
+Проверить где запустились поды nginx можно с помощью команды
+```bash
+kubectl get pods -n nginx-ingress -o wide
+```
+
+## Kibana
+
+Получить внешний IP для сервиса можно с помощью команды
+```bash
+kubectl get services -n nginx-ingress
+```
+
+Обновляем релиз
+```bash
+helm upgrade --install kibana elastic/kibana --namespace observability -f kubernetes-logging/kibana.values.yaml
+```
+
+После обновления релиза стала доступна kibana по адресу kibana.<YOUR_IP>.xip.io
+
+### Решение проблемы отсутсвия логов от fluent bit
+
+Посмотреть логи можно с помощью команды
+```bash
+kubectl logs -n observability fluent-bit-qgzlz --tail 2 
+```
+*В ДЗ (страница 16) эта команда дана с ошибкой, неправильно указан namespace.*
+
+ПРименим исправление
+```bash
+helm upgrade --install fluent-bit stable/fluent-bit --namespace observability -f kubernetes-logging/fluent-bit.values.yaml
+```
