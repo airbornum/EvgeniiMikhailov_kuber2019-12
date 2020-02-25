@@ -37,12 +37,14 @@ helm search repo -l stable/prometheus-operator | head -n 2
 helm inspect values stable/prometheus-operator --version=8.5.14 > kubernetes-monitoring/prometheus-operator.values.yaml.default
 ```
 В файле prometheus-operator.values.yaml добавляем описание Ingresses. В качестве имен используем сервис nip.io с указанием ранее найденого IP адреса ingress контроллера.
+Кроме этого необходимо установим serviceMonitorSelectorNilUsesHelmValues в false (https://github.com/helm/charts/issues/11310#issuecomment-493525598)
 
 Устанавливаем prometheus-operator
 ```bash
 kubectl create ns monitoring
 helm upgrade --install prometheus-operator stable/prometheus-operator --version=8.5.14 --namespace=monitoring -f kubernetes-monitoring/prometheus-operator.values.yaml
 ```
+При уситановке получал сообщение info, что пропускаются CRD, к видимым последствиям это не привело. Как применить CRD до установки описано в статье https://github.com/helm/charts/tree/master/stable/prometheus-operator#coreos-crds
 
 #### Проверка установки
 По адресу grafana.*your_ip*.nip.io открывается Grafana. Стандартный пароль можно посмотреть в файле с переменными по умолчанию.
@@ -77,9 +79,12 @@ kubectl apply -f kubernetes-monitoring/service.yaml -n app
 
 ### ServiceMonitor
 
+Servicemonitor настроаивался согласно статьи https://github.com/coreos/prometheus-operator/blob/master/Documentation/user-guides/getting-started.md
+
 ```bash
 kubectl apply -f kubernetes-monitoring/servicemonitor.yaml -n app
 ```
 
 #### Проверка сбора метрик
 В prometheus появились новые targets.
+![prometheus targets](targets.png)
