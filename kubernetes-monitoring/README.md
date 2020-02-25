@@ -50,4 +50,20 @@ helm upgrade --install prometheus-operator stable/prometheus-operator --version=
 
 ## Создание Docker образа
 
-Создан Docker образ с добавлением stub_status по пути /basic_status. По пути / отдается hostname.
+Создан Docker образ с добавлением stub_status по пути /stub_status на порту 8080. По пути / на порту 80 отдается hostname.
+
+## Сбор метрик с nginx
+
+### Создание deployment
+
+Шаблон нового deployment можно создать с помощью команды
+```bash
+kubectl create deployment app --image evgeniim/nginx-with-status:0.0.2 --dry-run -o yaml > kubernetes-monitoring/deployment.yaml
+```
+Node exporter запускается как sidecar контейнер.
+
+Применим получившиеся конфигурационные файлы
+```bash
+kubectl create ns app
+kubectl apply -f kubernetes-monitoring/deployment.yaml -n app
+```
