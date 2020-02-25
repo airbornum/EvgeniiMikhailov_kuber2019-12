@@ -74,3 +74,12 @@ kubectl apply -f kubernetes-monitoring/service.yaml -n app
 #### Проверка работы сервиса
 Получим ip адреса сервиса kubectl get service -n app
 Посмотрим метрики сервиса curl *service_ip_address*:9113/metrics
+
+### ServiceMonitor
+
+```bash
+kubectl apply -f kubernetes-monitoring/servicemonitor.yaml -n app
+```
+
+#### Проверка сбора метрик
+В prometheus появились новые targets.

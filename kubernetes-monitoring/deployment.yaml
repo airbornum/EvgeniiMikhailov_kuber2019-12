@@ -19,6 +19,9 @@ spec:
       containers:
       - image: evgeniim/nginx-with-status:0.0.2
         name: nginx-with-status
+        ports:
+        - name: web
+          containerPort: 80
         resources:
           requests:
             memory: "64Mi"
@@ -28,4 +31,7 @@ spec:
             cpu: "250m"
       - image: nginx/nginx-prometheus-exporter:0.6.0
         name: exporter
+        ports:
+          - name: metrics
+            containerPort: 9113
         resources: {}

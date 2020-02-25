@@ -19,6 +19,8 @@ grafana:
       - /
 
 prometheus:
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false
   ingress:
     enabled: true
     annotations:
