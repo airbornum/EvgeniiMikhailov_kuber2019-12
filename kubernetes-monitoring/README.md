@@ -36,7 +36,7 @@ helm search repo -l stable/prometheus-operator | head -n 2
 ```bash
 helm inspect values stable/prometheus-operator --version=8.5.14 > kubernetes-monitoring/prometheus-operator.values.yaml.default
 ```
-В файле prometheus-operator.values.yaml добавляем описание Ingresses. В качестве имен используем сервис nip.io с указанием IP адреса ingress контроллера.
+В файле prometheus-operator.values.yaml добавляем описание Ingresses. В качестве имен используем сервис nip.io с указанием ранее найденого IP адреса ingress контроллера.
 
 Устанавливаем prometheus-operator
 ```bash
@@ -45,5 +45,9 @@ helm upgrade --install prometheus-operator stable/prometheus-operator --version=
 ```
 
 #### Проверка установки
-По адресу grafana.*your_ip*.nip.io открывается Grafana. Стандартный пароль можно посмотреть в стандартном файле с переменными.
+По адресу grafana.*your_ip*.nip.io открывается Grafana. Стандартный пароль можно посмотреть в файле с переменными по умолчанию.
 По адресу prometheus.*your_ip*.nip.io (на 80 порту) открывается prometheus. Alertmanager также открывается на 80 порту по адресу alertmanager.*your_ip*.nip.io
+
+## Создание Docker образа
+
+Создан Docker образ с добавлением stub_status по пути /basic_status. По пути / отдается hostname.
