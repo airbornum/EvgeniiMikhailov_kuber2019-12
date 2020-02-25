@@ -7,7 +7,7 @@ gcloud beta container --project "test-lab" clusters create "monitoring-lab" --zo
 ```
 
 ## Установка prometheus-operator
-Для установки prometheus-operartor будем использовать helm3. Так как установка производится на GKE кластере, то будем публиковать сервисы в интренет с помощью nginx-ingress.
+Для установки prometheus-operartor будем использовать helm3. Так как установка производится в GKE кластере, то будем публиковать сервисы в интренет с помощью nginx-ingress.
 
 Добавляем репозиторий с charts
 ```bash
@@ -20,7 +20,7 @@ helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 kubectl create ns nginx-ingress
 helm upgrade --install nginx-ingress stable/nginx-ingress --namespace=nginx-ingress --version=1.29.5
 ```
-Смотрим IP адрес контроллера
+Смотрим IP адрес контроллера ingress, он нам пригодится для указания имен хостов публикуемых сервисов.
 ```bash
 kubectl get service -n nginx-ingress
 ```
@@ -45,5 +45,5 @@ helm upgrade --install prometheus-operator stable/prometheus-operator --version=
 ```
 
 #### Проверка установки
-По адресу grafana.<your ip>.nip.io открывается Grafana. Стандартный пароль можно посмотреть в стандартном файле с переменными.
-По адресу prometheus.<your ip>.nip.io (на 80 порту) открывается prometheus. Alertmanager также открывается на 80 порту по адресу alertmanager.<your ip>.nip.io
+По адресу grafana.*your_ip*.nip.io открывается Grafana. Стандартный пароль можно посмотреть в стандартном файле с переменными.
+По адресу prometheus.*your_ip*.nip.io (на 80 порту) открывается prometheus. Alertmanager также открывается на 80 порту по адресу alertmanager.*your_ip*.nip.io
