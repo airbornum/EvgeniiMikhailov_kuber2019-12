@@ -58,12 +58,19 @@ helm upgrade --install prometheus-operator stable/prometheus-operator --version=
 
 Шаблон нового deployment можно создать с помощью команды
 ```bash
+kubectl create ns app
 kubectl create deployment app --image evgeniim/nginx-with-status:0.0.2 --dry-run -o yaml > kubernetes-monitoring/deployment.yaml
+kubectl apply -f kubernetes-monitoring/deployment.yaml -n app
 ```
 Node exporter запускается как sidecar контейнер.
 
-Применим получившиеся конфигурационные файлы
+### Создадим сервис
+Шаблон сервиса для дальнейшей конфишгурации получим с помощью команды
 ```bash
-kubectl create ns app
-kubectl apply -f kubernetes-monitoring/deployment.yaml -n app
+kubectl create svc loadbalancer app --tcp=80:80 --tcp=9113:9113 --dry-run -o yaml > kubernetes-monitoring/service.yaml
+kubectl apply -f kubernetes-monitoring/service.yaml -n app
 ```
+
+#### Проверка работы сервиса
+Получим ip адреса сервиса kubectl get service -n app
+Посмотрим метрики сервиса curl *service_ip_address*:9113/metrics
