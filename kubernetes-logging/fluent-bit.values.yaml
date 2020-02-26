@@ -3,14 +3,13 @@ backend:
   es:
     host: elasticsearch-master
 rawConfig: |
-  @INCLUDE
-  @INCLUDE
-  @INCLUDE
-  @INCLUDE
-  fluent-bit-service.conf fluent-bit-input.conf fluent-bit-filter.conf fluent-bit-output.conf
-  
+  @INCLUDE fluent-bit-service.conf
+  @INCLUDE fluent-bit-input.conf
+  @INCLUDE fluent-bit-filter.conf
+  @INCLUDE fluent-bit-output.conf
+
   [FILTER]
-      Name    modify
-      Match   *
-      Remove  time
-      Remove  @timestamp
+    Name    modify
+    Match   *
+    Remove  time
+    Remove  @timestamp

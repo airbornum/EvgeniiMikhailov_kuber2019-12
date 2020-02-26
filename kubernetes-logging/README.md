@@ -71,7 +71,7 @@ kubectl logs -n observability fluent-bit-qgzlz --tail 2
 ```
 *В ДЗ (страница 16) эта команда дана с ошибкой, неправильно указан namespace.*
 
-ПРименим исправление
+Применим исправление
 ```bash
 helm upgrade --install fluent-bit stable/fluent-bit --namespace observability -f kubernetes-logging/fluent-bit.values.yaml
 ```
