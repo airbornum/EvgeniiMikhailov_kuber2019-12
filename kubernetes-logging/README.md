@@ -75,3 +75,18 @@ kubectl logs -n observability fluent-bit-qgzlz --tail 2
 ```bash
 helm upgrade --install fluent-bit stable/fluent-bit --namespace observability -f kubernetes-logging/fluent-bit.values.yaml
 ```
+
+# Мониторинг ElasticSearch
+
+Установим Prometheus
+```bash
+helm upgrade --install prometheus-operator stable/prometheus-operator --version=8.5.14 --namespace=observability -f kubernetes-logging/prometheus-operator.values.yaml
+```
+
+Установим Prometheus exporter
+```bash
+helm upgrade --install elasticsearch-exporter stable/elasticsearch-exporter --set es.uri=http://elasticsearch-master:9200 --set serviceMonitor.enabled=true --namespace=observability
+```
+
+Протестирована работоспособность кластера в случае отключения одной и двух нод.
+Ноды отключались с помощью команды kubectl drain *node_name* --ignore-daemonsets, а включались с помощью kubcetl uncordon *node_name*
