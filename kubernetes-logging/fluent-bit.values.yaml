@@ -2,6 +2,8 @@ backend:
   type: es
   es:
     host: elasticsearch-master
+tolerations:
+  - operator: "Exists"
 rawConfig: |
   @INCLUDE fluent-bit-service.conf
   @INCLUDE fluent-bit-input.conf

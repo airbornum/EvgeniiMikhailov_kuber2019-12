@@ -90,3 +90,13 @@ helm upgrade --install elasticsearch-exporter stable/elasticsearch-exporter --se
 
 Протестирована работоспособность кластера в случае отключения одной и двух нод.
 Ноды отключались с помощью команды kubectl drain *node_name* --ignore-daemonsets, а включались с помощью kubcetl uncordon *node_name*
+
+## Сбор логов с nginx-ingress
+
+Пропишем tolerations для fluent-bit чтобы он запускался на всех нодах кластера после этого появятся логи nginx.
+
+Включен вывод логов в формате json.
+
+## Kibana dashboard
+Настроен дашборд для вывода количества обращений к nginx-ingress
+![dashboard](dashboard.png)
