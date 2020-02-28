@@ -17,6 +17,13 @@ grafana:
       - grafana.34.76.9.138.xip.io
     paths:
       - /
+  additionalDataSources:
+    - name: Loki
+      type: loki
+      access: proxy
+      url: http://loki:3100
+      jsonData:
+        maxLines: 1000
 
 prometheus:
   prometheusSpec:

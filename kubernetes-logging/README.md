@@ -100,3 +100,14 @@ helm upgrade --install elasticsearch-exporter stable/elasticsearch-exporter --se
 ## Kibana dashboard
 Настроен дашборд для вывода количества обращений к nginx-ingress
 ![dashboard](dashboard.png)
+
+# Loki
+
+## Установка Loki и Promtail
+```bash
+helm upgrade --install loki loki/loki-stack --namespace=observability -f kubernetes-logging/loki.values.yaml
+helm upgrade --install prometheus-operator stable/prometheus-operator --version=8.5.14 --namespace=observability -f kubernetes-logging/prometheus-operator.values.yaml
+```
+
+Настроена визуализация данных из Loki в Prometheus
+![loki](loki.png)
