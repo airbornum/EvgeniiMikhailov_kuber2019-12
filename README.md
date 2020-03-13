@@ -208,3 +208,6 @@ helm inspect values stable/chartmuseum --version=2.3.2 > chartmuseum/values.yaml
 Выполнено задание по созданию CRD и CR. Протестировано описание спецификации и обязательных полей.
 
 ## [ДЗ #8 (к лекции #10)](kubernetes-monitoring/README.md)
+
+## [ДЗ #9 (к лекции #11)](kubernetes-logging/README.md)
+
