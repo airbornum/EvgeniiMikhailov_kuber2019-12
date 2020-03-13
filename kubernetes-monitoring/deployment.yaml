@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: app
+  name: app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: app
+    spec:
+      containers:
+      - image: evgeniim/nginx-with-status:0.0.2
+        name: nginx-with-status
+        ports:
+        - name: web
+          containerPort: 80
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
+      - image: nginx/nginx-prometheus-exporter:0.6.0
+        name: exporter
+        ports:
+          - name: metrics
+            containerPort: 9113
+        resources: {}
